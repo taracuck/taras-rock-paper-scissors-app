@@ -1,0 +1,156 @@
+<div class="game-page">
+  <header class="header">
+    <div class="score-board">
+      <img class="logo" src="/assets/logo.svg" alt="Logo Image" />
+      <div class="score-card">
+        <p>SCORE</p>
+        <p class="score">{{ score }}</p>
+      </div>
+    </div>
+    <button class="reset-button-mobile" (click)="resetScore()">
+      Reset Game
+    </button>
+  </header>
+
+  <main class="game" *ngIf="!choices.user">
+    <img src="/assets/bg-triangle.svg" alt="Triangle Image" class="triangle" />
+
+    <div class="paper choice paper-border" (click)="setPlayerChoice(1)">
+      <span class="wrapper">
+        <img src="/assets/icon-paper.svg" alt="Paper Image" class="image" />
+      </span>
+    </div>
+    <div class="scissors choice scissors-border" (click)="setPlayerChoice(2)">
+      <span class="wrapper">
+        <img
+          src="/assets/icon-scissors.svg"
+          alt="Scissors Image"
+          class="image"
+        />
+      </span>
+    </div>
+    <div class="rock choice rock-border" (click)="setPlayerChoice(3)">
+      <span class="wrapper">
+        <img src="/assets/icon-rock.svg" alt="Rock Image" class="image" />
+      </span>
+    </div>
+  </main>
+
+  <main class="plays-made" *ngIf="choices.user">
+    <section class="plays">
+      <div class="user">
+        <p class="choice-title-desktop">YOU PICKED</p>
+        <div
+          class="play-choice"
+          [ngClass]="{
+            pending: !choices.computer,
+            'paper-border': checkUserChoice(1),
+            'scissors-border': checkUserChoice(2),
+            'rock-border': checkUserChoice(3)
+          }"
+        >
+          <span class="wrapper">
+            <img
+              src="/assets/icon-paper.svg"
+              alt="Paper Image"
+              class="final-image"
+              *ngIf="choices.user === 1"
+            />
+            <img
+              src="/assets/icon-scissors.svg"
+              alt="Scissors Image"
+              class="final-image"
+              *ngIf="choices.user === 2"
+            />
+            <img
+              src="/assets/icon-rock.svg"
+              alt="Rock Image"
+              class="final-image"
+              *ngIf="choices.user === 3"
+            />
+          </span>
+        </div>
+        <p class="choice-title-mobile">YOU PICKED</p>
+      </div>
+      <div class="game-results-desktop" *ngIf="choices.computer">
+        <p class="win-or-lose" *ngIf="userWon === 1">YOU WIN</p>
+        <p class="win-or-lose" *ngIf="userWon === 0">YOU LOSE</p>
+        <p class="win-or-lose" *ngIf="userWon === 2">IT'S A DRAW</p>
+        <button (click)="clearGame()" class="play-again-button-mobile">
+          PLAY AGAIN
+        </button>
+        <button (click)="clearGame()" class="play-again-button-desktop">
+          PLAY AGAIN
+        </button>
+      </div>
+      <div class="computer">
+        <p class="choice-title-desktop">THE HOUSE PICKED</p>
+        <div
+          class="play-choice"
+          [ngClass]="{
+            pending: !choices.computer,
+            'paper-border': checkComputerChoice(1),
+            'scissors-border': checkComputerChoice(2),
+            'rock-border': checkComputerChoice(3)
+          }"
+        >
+          <span class="wrapper">
+            <img
+              src="/assets/icon-paper.svg"
+              alt="Paper Image"
+              class="final-image"
+              *ngIf="choices.computer === 1"
+            />
+            <img
+              src="/assets/icon-scissors.svg"
+              alt="Scissors Image"
+              class="final-image"
+              *ngIf="choices.computer === 2"
+            />
+            <img
+              src="/assets/icon-rock.svg"
+              alt="Rock Image"
+              class="final-image"
+              *ngIf="choices.computer === 3"
+            />
+          </span>
+        </div>
+        <p class="choice-title-mobile">THE HOUSE PICKED</p>
+      </div>
+    </section>
+
+    <div class="game-results-mobile" *ngIf="choices.computer">
+      <p class="win-or-lose" *ngIf="userWon === 1">YOU WIN</p>
+      <p class="win-or-lose" *ngIf="userWon === 0">YOU LOSE</p>
+      <p class="win-or-lose" *ngIf="userWon === 2">IT'S A DRAW</p>
+      <button (click)="clearGame()" class="play-again-button-mobile">
+        PLAY AGAIN
+      </button>
+    </div>
+  </main>
+
+  <button class="rules-button-mobile" routerLink="/rules">RULES</button>
+  <button class="rules-button-desktop" (click)="toggleRulesPopup()">
+    RULES
+  </button>
+  <button class="reset-button-desktop" (click)="resetScore()">
+    RESET GAME
+  </button>
+
+  <div class="rules-page" *ngIf="rulesOpen">
+    <div class="desktop">
+      <h2 class="rules-title">RULES</h2>
+      <img
+        src="/assets/image-rules.svg"
+        alt="Game Rules Image"
+        class="rules-image"
+      />
+      <img
+        src="/assets/icon-close.svg"
+        alt="Close Button"
+        class="exit-popup-button"
+        (click)="toggleRulesPopup()"
+      />
+    </div>
+  </div>
+</div>
